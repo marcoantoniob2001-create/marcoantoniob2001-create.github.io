@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ficha de Treino — Glúteos + Recomposição</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--panel2:#17213a;--text:#f4f7fb;--muted:#9eabc2;--accent:#8b5cf6;--accent2:#22c55e;--line:#263451}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#080d19,#111a31);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text)}
+.container{max-width:1050px;margin:auto;padding:24px}.hero{padding:28px;border:1px solid var(--line);background:rgba(18,26,46,.92);border-radius:24px;margin-bottom:18px}
+.eyebrow{color:#b9a2ff;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px}.hero h1{margin:8px 0 6px;font-size:32px}.hero p{margin:0;color:var(--muted);line-height:1.5}
+.info{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}.pill{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}.pill b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.pill span{font-weight:700}
+.tabs{display:flex;gap:8px;overflow:auto;padding:4px 0 14px;position:sticky;top:0;background:rgba(11,16,32,.92);backdrop-filter:blur(12px);z-index:5}.tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:11px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;font-weight:700}.tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+.day{display:none}.day.active{display:block}.dayhead{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin:8px 0 14px}.dayhead h2{margin:0;font-size:25px}.focus{color:var(--muted);font-size:14px}.card{background:rgba(18,26,46,.96);border:1px solid var(--line);border-radius:18px;padding:15px;margin:10px 0}.exercise{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.name{font-weight:800;font-size:16px}.meta{color:var(--muted);font-size:13px;margin-top:5px}.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.badge{padding:5px 8px;border-radius:8px;background:#202c49;font-size:12px}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid var(--line);background:#1b2743;color:white;border-radius:10px;padding:9px 11px;cursor:pointer;text-decoration:none;font-size:13px;font-weight:700}.btn.video{background:rgba(139,92,246,.18);border-color:#6d4bd4}.btn.timer{background:rgba(34,197,94,.12);border-color:#2e8c56}.log{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.log input{width:100%;background:#0d1528;border:1px solid var(--line);color:white;border-radius:9px;padding:9px}.footer{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:16px;color:var(--muted);font-size:13px;line-height:1.55}.timerbox{position:fixed;right:18px;bottom:18px;background:#111a2e;border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:none;box-shadow:0 10px 35px rgba(0,0,0,.35)}.timerbox b{font-size:22px}.timerbox button{margin-left:10px}.print{margin-left:auto}.toprow{display:flex;gap:8px;align-items:center}.small{font-size:12px;color:var(--muted)}@media(max-width:700px){.container{padding:14px}.info{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:25px}.dayhead{display:block}.exercise{grid-template-columns:1fr}.actions{justify-content:flex-start}.log{grid-template-columns:1fr 1fr 1fr}}
+@media print{body{background:white;color:#111}.hero,.card,.footer{background:white;border-color:#ddd}.tabs{display:none}.day{display:block!important}.btn,.timerbox{display:none}.muted,.focus,.meta,.small{color:#555}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="hero">
+    <div class="eyebrow">Marco Barbosa Personal Trainer</div>
+    <h1>Treino • 4 semanas</h1>
+    <p>Objetivo: recomposição corporal, prioridade em glúteos, definição de braços/abdômen e desenvolvimento proporcional de pernas.</p>
+    <div class="info">
+      <div class="pill"><b>Frequência</b><span>Seg–Sex</span></div>
+      <div class="pill"><b>Duração</b><span>60–70 min</span></div>
+      <div class="pill"><b>Prioridade</b><span>Glúteos 🍑</span></div>
+      <div class="pill"><b>Fim de semana</b><span>Recuperação</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" onclick="showDay(0,this)">Segunda</button><button class="tab" onclick="showDay(1,this)">Terça</button><button class="tab" onclick="showDay(2,this)">Quarta</button><button class="tab" onclick="showDay(3,this)">Quinta</button><button class="tab" onclick="showDay(4,this)">Sexta</button>
+  </nav>
+
+  
+    <section class="day active" id="day-0">
+      <div class="dayhead">
+        <div><h2>Segunda — Glúteos + Posterior</h2><div class="focus">Força e tensão mecânica</div></div>
+        <div class="toprow"><span class="small">Cardio: 10–15 min • caminhada inclinada ou bike • intensidade moderada</span><button class="btn print" onclick="window.print()">🖨 Imprimir</button></div>
+      </div>
+      
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Hip Thrust</div>
+              <div class="meta">Glúteos</div>
+              <div class="badges">
+                <span class="badge">4 séries</span>
+                <span class="badge">6–8 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hip%20thrust%20barbell%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Stiff / RDL</div>
+              <div class="meta">Posterior + glúteos</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">6–8 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=Romanian%20deadlift%20RDL%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Afundo reverso</div>
+              <div class="meta">Glúteos + pernas</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=reverse%20lunge%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Mesa flexora</div>
+              <div class="meta">Posteriores</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–12 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=lying%20leg%20curl%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Abdução</div>
+              <div class="meta">Glúteo médio</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">12–20 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hip%20abduction%20machine%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+    </section>
+    
+    <section class="day" id="day-1">
+      <div class="dayhead">
+        <div><h2>Terça — Superior + Abdômen</h2><div class="focus">Costas, ombros, braços e core</div></div>
+        <div class="toprow"><span class="small">Cardio: 10–15 min • intensidade moderada</span><button class="btn print" onclick="window.print()">🖨 Imprimir</button></div>
+      </div>
+      
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Puxada alta</div>
+              <div class="meta">Costas</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=lat%20pulldown%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Supino inclinado</div>
+              <div class="meta">Peitoral</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=incline%20dumbbell%20bench%20press%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Remada baixa</div>
+              <div class="meta">Costas</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–12 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=seated%20cable%20row%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Elevação lateral</div>
+              <div class="meta">Deltoides</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">12–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=dumbbell%20lateral%20raise%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Tríceps corda</div>
+              <div class="meta">Tríceps</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">10–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=cable%20rope%20triceps%20pushdown%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Rosca direta</div>
+              <div class="meta">Bíceps</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">10–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=barbell%20biceps%20curl%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Crunch na polia</div>
+              <div class="meta">Abdômen</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">10–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=cable%20crunch%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+    </section>
+    
+    <section class="day" id="day-2">
+      <div class="dayhead">
+        <div><h2>Quarta — Glúteos + Quadríceps</h2><div class="focus">Glúteos como prioridade; quadríceps proporcional</div></div>
+        <div class="toprow"><span class="small">Cardio: 10–15 min • intensidade moderada</span><button class="btn print" onclick="window.print()">🖨 Imprimir</button></div>
+      </div>
+      
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Hip Thrust</div>
+              <div class="meta">Glúteos</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hip%20thrust%20barbell%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Agachamento</div>
+              <div class="meta">Glúteos + quadríceps</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">6–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=barbell%20back%20squat%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Leg Press</div>
+              <div class="meta">Quadríceps + glúteos</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">8–12 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=leg%20press%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Búlgaro</div>
+              <div class="meta">Glúteos + pernas</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">8–12 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=bulgarian%20split%20squat%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Cadeira extensora</div>
+              <div class="meta">Quadríceps</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">12–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=leg%20extension%20machine%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Abdução</div>
+              <div class="meta">Glúteo médio</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">15–20 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hip%20abduction%20machine%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+    </section>
+    
+    <section class="day" id="day-3">
+      <div class="dayhead">
+        <div><h2>Quinta — Superior + Abdômen</h2><div class="focus">Costas, deltoides, braços e core</div></div>
+        <div class="toprow"><span class="small">Cardio: 10–15 min • intensidade moderada</span><button class="btn print" onclick="window.print()">🖨 Imprimir</button></div>
+      </div>
+      
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Puxada supinada</div>
+              <div class="meta">Costas + bíceps</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=underhand%20supinated%20lat%20pulldown%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Desenvolvimento</div>
+              <div class="meta">Ombros</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=dumbbell%20shoulder%20press%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Remada unilateral</div>
+              <div class="meta">Costas</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–12 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=one%20arm%20dumbbell%20row%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Elevação lateral</div>
+              <div class="meta">Deltoides</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">12–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=dumbbell%20lateral%20raise%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Tríceps francês</div>
+              <div class="meta">Tríceps</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">10–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=dumbbell%20overhead%20triceps%20extension%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Rosca martelo</div>
+              <div class="meta">Bíceps</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">10–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=dumbbell%20hammer%20curl%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Elevação de pernas</div>
+              <div class="meta">Abdômen</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">10–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hanging%20leg%20raise%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+    </section>
+    
+    <section class="day" id="day-4">
+      <div class="dayhead">
+        <div><h2>Sexta — Glúteos + Posterior</h2><div class="focus">Terceiro estímulo de glúteos com menor custo de recuperação</div></div>
+        <div class="toprow"><span class="small">Cardio: 10–15 min • opcional conforme tempo e recuperação</span><button class="btn print" onclick="window.print()">🖨 Imprimir</button></div>
+      </div>
+      
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Hip Thrust</div>
+              <div class="meta">Glúteos</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2–3</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hip%20thrust%20barbell%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Stiff / RDL</div>
+              <div class="meta">Posterior + glúteos</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">8–10 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=Romanian%20deadlift%20RDL%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Step-up</div>
+              <div class="meta">Glúteos + pernas</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">8–12 reps</span>
+                <span class="badge">RIR 2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=step%20up%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Flexora</div>
+              <div class="meta">Posteriores</div>
+              <div class="badges">
+                <span class="badge">3 séries</span>
+                <span class="badge">10–12 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=seated%20leg%20curl%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Glúteo no cabo</div>
+              <div class="meta">Glúteos</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">12–15 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=cable%20glute%20kickback%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+        <div class="card">
+          <div class="exercise">
+            <div>
+              <div class="name">Abdução</div>
+              <div class="meta">Glúteo médio</div>
+              <div class="badges">
+                <span class="badge">2 séries</span>
+                <span class="badge">15–20 reps</span>
+                <span class="badge">RIR 1–2</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn video" href="https://www.youtube.com/results?search_query=hip%20abduction%20machine%20exercise" target="_blank" rel="noopener">🎥 Vídeo</a>
+              <button class="btn timer" onclick="startTimer(90)">⏱ 90s</button>
+            </div>
+          </div>
+          <div class="log">
+            <input placeholder="Carga" aria-label="Carga">
+            <input placeholder="Reps feitas" aria-label="Repetições">
+            <input placeholder="RIR real" aria-label="RIR real">
+          </div>
+        </div>
+    </section>
+    
+
+  <div class="footer">
+    <b>Regras do bloco</b><br>
+    • Semana 1: RIR 2–3 e ajuste das cargas.<br>
+    • Semana 2: RIR ~2 e progressão de repetições/carga quando atingir o topo da faixa.<br>
+    • Semana 3: RIR 1–2; maior estímulo do bloco.<br>
+    • Semana 4: deload — reduzir aproximadamente 40–50% das séries e trabalhar em RIR 3–4.<br>
+    • Exercícios principais: descanso normalmente 2–3 min. Acessórios: 60–90 s. Não sacrificar descanso dos exercícios principais para “caber” o cardio.<br>
+    • Vídeos: os botões abrem uma busca de demonstrações do exercício; confirme a execução e ajuste à aluna antes de prescrever a carga.
+  </div>
+</div>
+
+<div class="timerbox" id="timerbox"><b id="timer">01:30</b><button class="btn" onclick="stopTimer()">Parar</button></div>
+
+<script>
+function showDay(i,el){
+  document.querySelectorAll('.day').forEach(x=>x.classList.remove('active'));
+  document.getElementById('day-'+i).classList.add('active');
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+let interval=null, remaining=0;
+function startTimer(sec){
+  clearInterval(interval); remaining=sec;
+  document.getElementById('timerbox').style.display='block';
+  renderTimer();
+  interval=setInterval(()=>{remaining--;renderTimer();if(remaining<=0){clearInterval(interval);navigator.vibrate?.([200,100,200]);}},1000);
+}
+function renderTimer(){
+  let m=Math.floor(Math.max(remaining,0)/60), s=Math.max(remaining,0)%60;
+  document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function stopTimer(){clearInterval(interval);document.getElementById('timerbox').style.display='none';}
+</script>
+</body>
+</html>
