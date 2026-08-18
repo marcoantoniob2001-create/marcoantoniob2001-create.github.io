@@ -1,0 +1,48 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Protocolo Camila</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090e1a;color:#f7f8fb;font-family:system-ui,-apple-system,sans-serif}.app{max-width:700px;margin:auto;padding:14px 14px 90px}.hero,.card{background:#121b2f;border:1px solid #293753;border-radius:20px;padding:16px}.brand{font-size:11px;letter-spacing:.12em;color:#aa94ff;font-weight:900}h1{margin:5px 0;font-size:26px}.muted{color:#9eabc0;font-size:12px}.weeks,.days{display:flex;gap:7px;overflow:auto;margin:11px 0}.weeks button,.days button{border:1px solid #2b3956;background:#141e34;color:#aeb9cb;padding:9px 12px;border-radius:12px;white-space:nowrap}.weeks button.on{background:#785bdf;color:#fff}.days button{border-radius:999px;font-weight:800}.days button.on{background:#fff;color:#101625}.bar{height:8px;background:#26324a;border-radius:9px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;width:0;background:#8a6bef}.stats{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:#aab5c7}.panel{display:none}.panel.on{display:block}.title{margin:16px 2px 8px}.title h2{margin:0;font-size:21px}.card{margin:9px 0;border-radius:16px;padding:13px}.top{display:flex;justify-content:space-between;gap:8px}.name{font-weight:900}.info{font-size:12px;color:#9ca9bd;margin-top:3px}.video{text-decoration:none;background:#211b3d;border:1px solid #5945a1;padding:7px 9px;border-radius:9px;font-size:12px}.set{display:grid;grid-template-columns:32px 1fr 52px 52px 48px;gap:6px;align-items:center;background:#0c1425;border-radius:10px;padding:6px;margin-top:6px}.check{width:29px;height:29px;border-radius:50%;border:1px solid #53617b;background:#141e34;color:#aeb8c9}.check.done{background:#22c55e;border-color:#22c55e;color:white}.set span{font-size:11px;color:#b5c0d1}.set input{width:100%;background:#162139;border:1px solid #2c3a56;color:white;border-radius:7px;padding:6px 2px;text-align:center;font-size:11px}.rest{display:flex;align-items:center;gap:7px;border-top:1px solid #25314a;margin-top:9px;padding-top:8px;font-size:11px;color:#9ba8bd}.rest b{margin-left:auto;color:white}.rest button,.finish{border:1px solid #35435f;background:#18233b;color:white;border-radius:8px;padding:6px 8px}.finish{width:100%;background:#1d6540;border-color:#2d8154;padding:12px;margin-top:10px;font-weight:900}.timer{display:none;position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#162039;border:1px solid #3b4966;padding:11px 15px;border-radius:15px;z-index:9}.timer b{font-size:21px}.feedback{display:none;position:fixed;inset:0;background:#000b;z-index:10;align-items:flex-end}.feedback.on{display:flex}.sheet{width:min(700px,100%);margin:auto;background:#121b2f;padding:18px;border-radius:22px 22px 0 0}.moods{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.moods button{background:#17233b;border:1px solid #30405e;color:white;border-radius:10px;padding:8px 2px}.moods button.on{background:#785bdf}textarea{width:100%;height:90px;margin-top:10px;background:#0c1425;border:1px solid #30405e;border-radius:10px;color:white;padding:10px}.send{width:100%;margin-top:8px;padding:12px;border:0;border-radius:10px;background:#22c55e;font-weight:900}
+</style></head><body><div class="app"><header class="hero"><div class="brand">MARCO BARBOSA • PERSONAL TRAINER</div><h1>🍑 Protocolo Camila</h1><div class="muted">4 semanas • 5 treinos • 60–70 min</div><div class="bar"><i id="bar"></i></div><div class="stats"><span id="wk">Semana 1 • Base</span><b id="stat">0%</b></div></header><div class="weeks" id="weeks"></div><div class="days" id="days"></div><main id="main"></main></div>
+<div class="timer" id="timer"><b id="clock">01:00</b> <button onclick="stopTimer()">Parar</button></div>
+<div class="feedback" id="feedback"><div class="sheet"><h3>Treino concluido</h3><div class="muted">Como você se sentiu?</div><div class="moods"><button onclick="mood(this,'Muito bem')">😍<br><small>Muito bem</small></button><button onclick="mood(this,'Bem')">🙂<br><small>Bem</small></button><button onclick="mood(this,'Normal')">😐<br><small>Normal</small></button><button onclick="mood(this,'Cansada')">😓<br><small>Cansada</small></button><button onclick="mood(this,'Muito cansada')">😣<br><small>Muito cansada</small></button></div><textarea id="note" placeholder="Feedback, dor, dificuldade, carga leve/pesada..."></textarea><button class="send" onclick="send()">Enviar para Marco no WhatsApp</button></div></div>
+<script>
+const data=[
+["Segunda","🍑 Glúteos + Posterior",[["Hip Thrust",4,"6–8","RIR 2",90],["Stiff / RDL",3,"6–8","RIR 2",90],["Afundo reverso",3,"8–10","RIR 2",60],["Mesa flexora",3,"8–12","RIR 1–2",45],["Abdução",2,"12–20","RIR 1–2",40]]],
+["Terça","💪 Superior + Abdômen",[["Puxada alta",3,"8–10","RIR 2",60],["Supino inclinado",3,"8–10","RIR 2",60],["Remada baixa",3,"8–12","RIR 2",60],["Elevação lateral",3,"12–15","RIR 1–2",40],["Tríceps corda",2,"10–15","RIR 1–2",40],["Rosca direta",2,"10–15","RIR 1–2",40],["Crunch na polia",3,"10–15","RIR 1–2",40]]],
+["Quarta","🍑 Glúteos + Quadríceps",[["Hip Thrust",3,"8–10","RIR 2",90],["Agachamento",3,"6–10","RIR 2",90],["Leg Press",2,"8–12","RIR 2",75],["Búlgaro",2,"8–12","RIR 1–2",60],["Cadeira extensora",2,"12–15","RIR 1–2",40],["Abdução",2,"15–20","RIR 1–2",40]]],
+["Quinta","💪 Superior + Abdômen",[["Puxada supinada",3,"8–10","RIR 2",60],["Desenvolvimento",2,"8–10","RIR 2",60],["Remada unilateral",3,"8–12","RIR 2",60],["Elevação lateral",3,"12–15","RIR 1–2",40],["Tríceps francês",2,"10–15","RIR 1–2",40],["Rosca martelo",2,"10–15","RIR 1–2",40],["Elevação de pernas",3,"10–15","RIR 1–2",40]]],
+["Sexta","🍑 Glúteos + Posterior",[["Hip Thrust",3,"8–10","RIR 2–3",90],["Stiff / RDL",3,"8–10","RIR 2",90],["Step-up",2,"8–12","RIR 2",60],["Flexora",3,"10–12","RIR 1–2",45],["Glúteo no cabo",2,"12–15","RIR 1–2",40],["Abdução",2,"15–20","RIR 1–2",40]]]];
+let week=+(localStorage.getItem("pc_week")||1),day=0,feel="",ti;
+function key(s){return "pc_"+week+"_"+day+"_"+s}
+function setWeek(w){
+  week=w;
+  localStorage.setItem('pc_week',String(w));
+  render();
+}
+function setDay(i){
+  day=i;
+  render();
+}
+function drawNav(){
+  document.getElementById('weeks').innerHTML=[1,2,3,4].map(w=>`<button class="${w==week?'on':''}" onclick="setWeek(${w})"><b>Semana ${w}</b><br><small>${['Base','Progressão','Pico','Deload'][w-1]}</small></button>`).join("");
+  document.getElementById('days').innerHTML=data.map((d,i)=>`<button class="${i==day?'on':''}" onclick="setDay(${i})">${d[0].slice(0,3).toUpperCase()}</button>`).join("");
+}
+function render(){drawNav();document.getElementById('wk').textContent=`Semana ${week} • ${['Base','Progressão','Pico','Deload'][week-1]}`;let d=data[day],n=0;let cards=d[2].map((e,ei)=>{let rows="";for(let s=1;s<=e[1];s++){let id=ei+"_"+s,done=localStorage.getItem(key("d_"+id))=="1";rows+=`<div class="set"><button class="check ${done?'done':''}" onclick="toggle(this,'${id}')">${done?'✓':'○'}</button><span>Série ${s}</span><input placeholder="kg" value="${localStorage.getItem(key('kg_'+id))||''}" onchange="localStorage.setItem(key('kg_${id}'),this.value)"><input placeholder="reps" value="${localStorage.getItem(key('rp_'+id))||''}" onchange="localStorage.setItem(key('rp_${id}'),this.value)"><input placeholder="RIR" value="${localStorage.getItem(key('ri_'+id))||''}" onchange="localStorage.setItem(key('ri_${id}'),this.value)"></div>`;n++}return `<div class="card"><div class="top"><div><div class="name">${e[0]}</div><div class="info">${e[1]} × ${e[2]} • ${e[3]}</div></div><a class="video" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e[0]+' exercício execução')}">🎥 Vídeo</a></div>${rows}<div class="rest"><span>⏱ Descanso</span><b>${Math.floor(e[4]/60)}:${String(e[4]%60).padStart(2,'0')}</b><button onclick="timerStart(${e[4]})">Iniciar</button></div></div>`}).join("");document.getElementById('main').innerHTML=`<div class="title"><h2>${d[0]}</h2><div class="muted">${d[1]} • cardio 10–15 min</div></div>${cards}<button class="finish" onclick="feedback.classList.add('on')">✓ Finalizar treino</button>`;progress()}
+function toggle(b,id){let v=!b.classList.contains("done");b.classList.toggle("done",v);b.textContent=v?"✓":"○";localStorage.setItem(key("d_"+id),v?"1":"0");progress()}
+function progress(){
+  const m=document.getElementById('main');
+  let a=m.querySelectorAll(".check").length,d=m.querySelectorAll(".check.done").length,p=a?Math.round(d/a*100):0;
+  document.getElementById('stat').textContent=d+"/"+a+" séries • "+p+"%";
+  document.getElementById('bar').style.width=p+"%";
+}
+function timerStart(s){clearInterval(ti);let r=s;timer.style.display="block";tick(r);ti=setInterval(()=>{r--;tick(r);if(r<=0){clearInterval(ti);navigator.vibrate?.([150,80,150])}},1000)}
+function tick(r){clock.textContent=String(Math.max(0,Math.floor(r/60))).padStart(2,"0")+":"+String(Math.max(0,r%60)).padStart(2,"0")}
+function stopTimer(){clearInterval(ti);timer.style.display="none"}
+function mood(b,v){feel=v;document.querySelectorAll(".moods button").forEach(x=>x.classList.remove("on"));b.classList.add("on")}
+function send(){
+  const m=document.getElementById('main');
+  let a=m.querySelectorAll(".check").length,d=m.querySelectorAll(".check.done").length;
+  let msg=`Treino concluido - Protocolo Camila\n\nDia: ${data[day][0]}\nSemana: ${week}/4\nSeries concluidas: ${d}/${a}\nPercepcao: ${feel||'Nao informado'}\nFeedback: ${document.getElementById('note').value||'Sem observacoes'}`;
+  window.open("https://wa.me/5533999291921?text="+encodeURIComponent(msg),"_blank");
+}
+render();
+</script></body></html>
