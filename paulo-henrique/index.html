@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Marco Personal — Paulo Henrique</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090e1a;color:#f7f8fb;font-family:system-ui,-apple-system,sans-serif}.app{max-width:700px;margin:auto;padding:14px 14px 90px}.hero,.card{background:#121b2f;border:1px solid #293753;border-radius:20px;padding:16px}.brand{font-size:11px;letter-spacing:.12em;color:#aa94ff;font-weight:900}h1{margin:5px 0;font-size:26px}.muted{color:#9eabc0;font-size:12px}.weeks,.days{display:flex;gap:7px;overflow:auto;margin:11px 0}.weeks button,.days button{border:1px solid #2b3956;background:#141e34;color:#aeb9cb;padding:9px 12px;border-radius:12px;white-space:nowrap}.weeks button.on{background:#785bdf;color:#fff}.days button{border-radius:999px;font-weight:800}.days button.on{background:#fff;color:#101625}.bar{height:8px;background:#26324a;border-radius:9px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;width:0;background:#8a6bef}.stats{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:#aab5c7}.title{margin:16px 2px 8px}.title h2{margin:0;font-size:21px}.card{margin:9px 0;border-radius:16px;padding:13px}.top{display:flex;justify-content:space-between;gap:8px}.name{font-weight:900}.info{font-size:12px;color:#9ca9bd;margin-top:3px}.cue{font-size:12px;line-height:1.35;color:#c7d0df;background:#0e1728;border:1px solid #263652;border-radius:10px;padding:8px 10px;margin-top:9px}.video{text-decoration:none;background:#211b3d;border:1px solid #5945a1;padding:7px 9px;border-radius:9px;font-size:12px;color:#fff}.set{display:grid;grid-template-columns:32px 1fr 52px 52px 48px;gap:6px;align-items:center;background:#0c1425;border-radius:10px;padding:6px;margin-top:6px}.check{width:29px;height:29px;border-radius:50%;border:1px solid #53617b;background:#141e34;color:#aeb8c9}.check.done{background:#22c55e;border-color:#22c55e;color:white}.set span{font-size:11px;color:#b5c0d1}.set input{width:100%;background:#162139;border:1px solid #2c3a56;color:white;border-radius:7px;padding:6px 2px;text-align:center;font-size:11px}.rest{display:flex;align-items:center;gap:7px;border-top:1px solid #25314a;margin-top:9px;padding-top:8px;font-size:11px;color:#9ba8bd}.rest b{margin-left:auto;color:white}.rest button,.finish{border:1px solid #35435f;background:#18233b;color:white;border-radius:8px;padding:6px 8px}.finish{width:100%;background:#1d6540;border-color:#2d8154;padding:12px;margin-top:10px;font-weight:900}.timer{display:none;position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#162039;border:1px solid #3b4966;padding:11px 15px;border-radius:15px;z-index:9}.timer b{font-size:21px}.feedback{display:none;position:fixed;inset:0;background:#000b;z-index:10;align-items:flex-end}.feedback.on{display:flex}.sheet{width:min(700px,100%);margin:auto;background:#121b2f;padding:18px;border-radius:22px 22px 0 0}.moods{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.moods button{background:#17233b;border:1px solid #30405e;color:white;border-radius:10px;padding:8px 2px}.moods button.on{background:#785bdf}textarea{width:100%;height:90px;margin-top:10px;background:#0c1425;border:1px solid #30405e;border-radius:10px;color:white;padding:10px}.send{width:100%;margin-top:8px;padding:12px;border:0;border-radius:10px;background:#22c55e;font-weight:900}.close{width:100%;margin-top:8px;padding:10px;border:1px solid #35435f;border-radius:10px;background:#18233b;color:white}.weeknote{margin:10px 0 0;padding:9px 10px;border-radius:10px;background:#0e1728;color:#c7d0df;font-size:12px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+<div class="brand">MARCO PERSONAL</div>
+<h1>Protocolo Paulo Henrique</h1>
+<div class="muted">4 semanas • 5 treinos • foco em hipertrofia e ganho de massa</div>
+<div class="weeknote" id="weeknote"></div>
+<div class="bar"><i id="bar"></i></div>
+<div class="stats"><span id="wk">Semana 1 • Base</span><b id="stat">0%</b></div>
+</header>
+<div class="weeks" id="weeks"></div>
+<div class="days" id="days"></div>
+<main id="main"></main>
+</div>
+<div class="timer" id="timer"><b id="clock">01:00</b> <button onclick="stopTimer()">Parar</button></div>
+<div class="feedback" id="feedback"><div class="sheet"><h3>Treino concluído</h3><div class="muted">Como você se sentiu?</div><div class="moods"><button onclick="mood(this,'Muito bem')">Muito bem</button><button onclick="mood(this,'Bem')">Bem</button><button onclick="mood(this,'Normal')">Normal</button><button onclick="mood(this,'Cansado')">Cansado</button><button onclick="mood(this,'Muito cansado')">Muito cansado</button></div><textarea id="note" placeholder="Feedback, dor, dificuldade, carga leve/pesada..."></textarea><button class="send" onclick="send()">Enviar para Marco no WhatsApp</button><button class="close" onclick="feedback.classList.remove('on')">Fechar</button></div></div>
+<script>
+const data=[
+["Segunda","Peito + Tríceps + Core",[
+["Supino reto com halteres",3,"8–10","RIR 2–3",90,"Mantenha os pés firmes, escápulas apoiadas e controle a descida. Suba sem perder a estabilidade dos ombros."],
+["Supino inclinado máquina",3,"8–12","RIR 2",90,"Ajuste o banco para manter os ombros confortáveis. Controle a descida e evite tirar as costas do apoio."],
+["Crucifixo no crossover",3,"10–15","RIR 2",60,"Mantenha os cotovelos levemente flexionados e o tronco firme. Feche os braços sem usar impulso."],
+["Tríceps na polia com barra",3,"10–12","RIR 2",60,"Mantenha os cotovelos próximos ao corpo e evite movimentar os ombros durante a extensão."],
+["Tríceps francês unilateral",3,"10–12","RIR 2",60,"Mantenha o braço estável e controle bem a descida. Evite compensar inclinando o tronco."],
+["Crunch na polia alta",3,"10–15","RIR 2",60,"Flexione o tronco aproximando as costelas da pelve. Evite transformar o movimento em uma puxada apenas com os braços."]
+]],
+["Terça","Costas + Bíceps",[
+["Puxada alta pronada",3,"8–12","RIR 2–3",90,"Mantenha o peito aberto e o tronco estável. Conduza o movimento pelos cotovelos sem jogar o corpo para trás."],
+["Remada baixa com triângulo",3,"8–12","RIR 2",90,"Mantenha o tronco firme e puxe o triângulo em direção ao abdômen sem usar balanço."],
+["Remada unilateral com halter",3,"8–12 por lado","RIR 2",90,"Apoie-se de forma estável e conduza o cotovelo para trás sem girar excessivamente o tronco."],
+["Rosca direta barra W",3,"8–12","RIR 2",75,"Mantenha os cotovelos próximos ao corpo e evite usar impulso do quadril ou do tronco."],
+["Rosca martelo com halteres",3,"10–12","RIR 2",60,"Mantenha os punhos neutros e os ombros estáveis. Suba e desça os halteres com controle."]
+]],
+["Quarta","Pernas — ênfase Quadríceps",[
+["Agachamento no Smith",3,"8–10","RIR 2–3",90,"Mantenha os pés bem apoiados e desça com controle até uma amplitude confortável, preservando a estabilidade do tronco."],
+["Leg Press 45°",3,"10–12","RIR 2",90,"Mantenha quadril e pelve apoiados. Desça com controle e evite arredondar a lombar no final da amplitude."],
+["Cadeira extensora",3,"10–15","RIR 1–2",75,"Controle a subida e a descida. Evite usar impulso e mantenha o quadril apoiado no banco."],
+["Mesa flexora",3,"10–12","RIR 2",75,"Mantenha o quadril apoiado e controle toda a amplitude, evitando elevar a pelve durante a flexão."],
+["Panturrilha em pé/máquina",3,"10–15","RIR 1–2",60,"Faça amplitude completa e controlada, evitando quicar no final do movimento. Faça uma breve pausa no topo."]
+]],
+["Quinta","Superior — ênfase Ombros + Core",[
+["Desenvolvimento com halteres",3,"8–10","RIR 2",90,"Mantenha o tronco estável e pressione os halteres acima da cabeça sem exagerar na extensão da lombar."],
+["Elevação lateral com halteres",3,"10–15","RIR 1–2",60,"Eleve os braços com controle e evite usar balanço do tronco. Mantenha os ombros longe das orelhas."],
+["Crucifixo inverso",3,"12–15","RIR 1–2",60,"Abra os braços conduzindo pelos cotovelos e mantenha o tronco estável. Evite compensar com impulso."],
+["Remada articulada/máquina",3,"8–12","RIR 2",90,"Mantenha o peito apoiado quando possível e puxe conduzindo pelos cotovelos, sem elevar os ombros."],
+["Supino inclinado com halteres",3,"8–12","RIR 2",90,"Mantenha escápulas apoiadas, pés firmes e controle a descida antes de pressionar os halteres."],
+["Rosca Scott máquina/barra W",3,"10–12","RIR 1–2",60,"Mantenha os braços apoiados e evite tirar os cotovelos do banco. Controle principalmente a descida."],
+["Tríceps corda",3,"10–12","RIR 1–2",60,"Mantenha os cotovelos estáveis e finalize a extensão sem inclinar o tronco para gerar impulso."],
+["Pallof Press",3,"10–15 por lado","RIR 2",60,"Mantenha costelas e pelve alinhadas e resista à rotação do tronco enquanto estende os braços."]
+]],
+["Sexta","Pernas — ênfase Posteriores + Glúteos",[
+["Stiff com halteres",3,"8–10","RIR 2–3",90,"Leve o quadril para trás mantendo a coluna neutra. Desça até onde conseguir preservar controle e tensão nos posteriores."],
+["Cadeira flexora",3,"10–12","RIR 2",75,"Mantenha o tronco apoiado e controle toda a amplitude, sem acelerar a volta da carga."],
+["Elevação pélvica / Hip Thrust",3,"8–12","RIR 2",90,"Estenda o quadril até alinhar o tronco sem hiperestender a lombar. Faça uma breve contração no topo."],
+["Agachamento Búlgaro",3,"8–12 por perna","RIR 2",90,"Use apoio se necessário para ganhar estabilidade. Desça com controle e mantenha o pé da frente totalmente apoiado."],
+["Panturrilha sentada",3,"12–15","RIR 1–2",60,"Faça amplitude completa e controlada, alongando embaixo e realizando uma breve pausa no topo."]
+]]
+];
+const weekNames=['Base','Progressão','Pico','Deload'];
+const weekNotes=[
+'Semana 1: adaptação e técnica. Use cargas que permitam cumprir as repetições com cerca de 2–3 repetições em reserva.',
+'Semana 2: progressão gradual. Tente acrescentar repetições mantendo técnica e o RIR indicado; aumente a carga apenas quando necessário.',
+'Semana 3: pico controlado. Busque o topo da faixa de repetições e progrida carga quando conseguir cumprir todas as séries com boa execução.',
+'Semana 4: deload. Reduza a carga ou o esforço, mantenha execução limpa e priorize recuperação antes do próximo bloco.'
+];
+let week=+(localStorage.getItem('pph_week')||1),day=0,feel='',ti;
+function key(s){return 'pph_'+week+'_'+day+'_'+s}
+function setWeek(w){week=w;localStorage.setItem('pph_week',String(w));render()}
+function setDay(i){day=i;render()}
+function drawNav(){
+ document.getElementById('weeks').innerHTML=[1,2,3,4].map(w=>`<button class="${w==week?'on':''}" onclick="setWeek(${w})"><b>Semana ${w}</b><br><small>${weekNames[w-1]}</small></button>`).join('');
+ document.getElementById('days').innerHTML=data.map((d,i)=>`<button class="${i==day?'on':''}" onclick="setDay(${i})">${d[0].slice(0,3).toUpperCase()}</button>`).join('');
+}
+function render(){
+ drawNav();document.getElementById('wk').textContent=`Semana ${week} • ${weekNames[week-1]}`;document.getElementById('weeknote').textContent=weekNotes[week-1];
+ const d=data[day];
+ const cards=d[2].map((e,ei)=>{
+   let rows='';
+   for(let s=1;s<=e[1];s++){
+     let id=ei+'_'+s,done=localStorage.getItem(key('d_'+id))==='1';
+     rows+=`<div class="set"><button class="check ${done?'done':''}" onclick="toggle(this,'${id}')">${done?'✓':'○'}</button><span>Série ${s}</span><input placeholder="kg" value="${localStorage.getItem(key('kg_'+id))||''}" onchange="localStorage.setItem(key('kg_${id}'),this.value)"><input placeholder="reps" value="${localStorage.getItem(key('rp_'+id))||''}" onchange="localStorage.setItem(key('rp_${id}'),this.value)"><input placeholder="RIR" value="${localStorage.getItem(key('ri_'+id))||''}" onchange="localStorage.setItem(key('ri_${id}'),this.value)"></div>`;
+   }
+   const rest=e[4]>0?`<div class="rest"><span>Descanso</span><b>${Math.floor(e[4]/60)}:${String(e[4]%60).padStart(2,'0')}</b><button onclick="timerStart(${e[4]})">Iniciar</button></div>`:'';
+   return `<div class="card"><div class="top"><div><div class="name">${e[0]}</div><div class="info">${e[1]} × ${e[2]} • ${e[3]}</div></div><a class="video" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e[0]+' exercício execução')}">Vídeo</a></div><div class="cue">${e[5]}</div>${rows}${rest}</div>`;
+ }).join('');
+ document.getElementById('main').innerHTML=`<div class="title"><h2>${d[0]}</h2><div class="muted">${d[1]}</div></div>${cards}<button class="finish" onclick="feedback.classList.add('on')">Finalizar treino</button>`;
+ progress();
+}
+function toggle(b,id){let v=!b.classList.contains('done');b.classList.toggle('done',v);b.textContent=v?'✓':'○';localStorage.setItem(key('d_'+id),v?'1':'0');progress()}
+function progress(){const m=document.getElementById('main');let a=m.querySelectorAll('.check').length,d=m.querySelectorAll('.check.done').length,p=a?Math.round(d/a*100):0;document.getElementById('stat').textContent=d+'/'+a+' séries • '+p+'%';document.getElementById('bar').style.width=p+'%'}
+function timerStart(s){clearInterval(ti);let r=s;timer.style.display='block';tick(r);ti=setInterval(()=>{r--;tick(r);if(r<=0){clearInterval(ti);navigator.vibrate?.([150,80,150])}},1000)}
+function tick(r){clock.textContent=String(Math.max(0,Math.floor(r/60))).padStart(2,'0')+':'+String(Math.max(0,r%60)).padStart(2,'0')}
+function stopTimer(){clearInterval(ti);timer.style.display='none'}
+function mood(b,v){feel=v;document.querySelectorAll('.moods button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+function send(){const m=document.getElementById('main');let a=m.querySelectorAll('.check').length,d=m.querySelectorAll('.check.done').length;let msg=`Treino concluido - Marco Personal - Paulo Henrique\n\nDia: ${data[day][0]}\nSemana: ${week}/4\nSeries concluidas: ${d}/${a}\nPercepcao: ${feel||'Nao informado'}\nFeedback: ${document.getElementById('note').value||'Sem observacoes'}`;window.open('https://wa.me/5533999291921?text='+encodeURIComponent(msg),'_blank')}
+render();
+</script>
+</body>
+</html>
