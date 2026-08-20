@@ -52,9 +52,26 @@ h1{font-size:28px;margin:18px 0 4px;position:relative;z-index:2}
 .footerMsg{text-align:center;margin:16px 5px 0;font-size:12px;color:#637084;line-height:1.45} .footerMsg b{color:var(--navy)}
 @media(max-width:480px){.logo{width:74px;height:74px} h1{font-size:24px} .set{grid-template-columns:30px 1fr 50px 50px 50px} .quickinfo{gap:5px}}
 </style>
+
+<style>
+.videoModal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
+.videoModal.open{display:flex}
+.videoBox{width:min(760px,100%);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.35)}
+.videoBoxHead{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#0f2344;color:#fff}
+.videoBoxHead b{font-size:15px}
+.videoBoxHead button{border:0;background:#ff765f;color:#fff;border-radius:9px;padding:8px 11px;font-weight:800}
+.videoFrame{aspect-ratio:16/9;background:#000}
+.videoFrame iframe{width:100%;height:100%;border:0}
+.videoHelp{padding:12px 16px;color:#5c6678;font-size:12px;line-height:1.4}
+</style>
+
+
+<style>
+button.execution{cursor:pointer;font:inherit}
+</style>
+
 </head>
 <body>
-<div class="preview">PRÉVIA VISUAL 2 • PROTOCOLO CAIO</div>
 <div class="app">
 <header class="hero">
   <div class="brandrow">
@@ -97,6 +114,44 @@ h1{font-size:28px;margin:18px 0 4px;position:relative;z-index:2}
 </div>
 
 <script>
+
+const videoQueries = {
+  "Supino reto na máquina":"supino reto máquina execução",
+  "Supino inclinado com halteres":"supino inclinado halteres execução",
+  "Peck Deck":"peck deck execução",
+  "Desenvolvimento de ombros na máquina":"desenvolvimento ombro máquina execução",
+  "Elevação lateral com halteres":"elevação lateral halteres execução",
+  "Tríceps francês unilateral na polia":"tríceps francês unilateral polia execução",
+  "Tríceps na polia com barra":"tríceps polia barra execução",
+  "Agachamento livre":"agachamento livre execução",
+  "Leg Press 45°":"leg press 45 execução",
+  "Agachamento búlgaro com halteres":"agachamento búlgaro halteres execução",
+  "Cadeira extensora":"cadeira extensora execução",
+  "Cadeira flexora":"cadeira flexora execução",
+  "Panturrilha em pé na máquina":"panturrilha em pé máquina execução",
+  "Abdominal na polia alta":"abdominal polia alta execução",
+  "Barra fixa pronada":"barra fixa pronada execução",
+  "Remada curvada com barra":"remada curvada barra execução",
+  "Puxada alta pegada neutra":"puxada alta pegada neutra execução",
+  "Remada baixa com triângulo":"remada baixa triângulo execução",
+  "Crucifixo inverso na máquina":"crucifixo inverso máquina execução",
+  "Elevação lateral unilateral na polia":"elevação lateral unilateral polia execução",
+  "Rosca direta com barra W":"rosca direta barra W execução",
+  "Rosca inclinada com halteres":"rosca inclinada halteres execução",
+  "Terra romeno / Stiff com barra":"stiff barra execução",
+  "Elevação pélvica":"elevação pélvica execução",
+  "Mesa flexora":"mesa flexora execução",
+  "Hack Squat — amplitude total":"hack squat amplitude total execução",
+  "Passada reversa com halteres":"passada reversa halteres execução",
+  "Panturrilha sentada":"panturrilha sentada execução",
+  "Pallof Press na polia":"pallof press polia execução",
+  "Corrida contínua":"corrida técnica 5 km"
+};
+function openExecution(name){
+  const q=encodeURIComponent(videoQueries[name] || (name+' execução'));
+  window.open('https://www.youtube.com/results?search_query='+q,'_blank','noopener');
+}
+
 const plans = {"seg": {"eyebrow": "SEGUNDA-FEIRA", "title": "Peito + Tríceps + Ombros", "estimate": "~65 min", "exercises": [["Supino reto na máquina", 4, "6–8", "1–2", "2–3 min", "Desça controlando e mantenha as escápulas apoiadas."], ["Supino inclinado com halteres", 3, "8–10", "1–2", "2 min", "Amplitude confortável e controle na descida."], ["Peck Deck", 3, "10–15", "1–2", "75–90s", "Alongue o peitoral sem perder a posição dos ombros."], ["Desenvolvimento de ombros na máquina", 3, "8–10", "1–2", "2 min", "Evite compensar arqueando excessivamente a lombar."], ["Elevação lateral com halteres", 4, "10–15", "1–2", "60–90s", "Priorize controle e evite balanço do tronco."], ["Tríceps francês unilateral na polia", 3, "10–12", "1–2", "60–90s", "Mantenha o braço estável durante o movimento."], ["Tríceps na polia com barra", 3, "8–12", "1–2", "60–90s", "Estenda completamente sem movimentar os ombros."]]}, "ter": {"eyebrow": "TERÇA-FEIRA", "title": "Pernas A + Core", "estimate": "~70 min", "exercises": [["Agachamento livre", 4, "6–8", "1–2", "2–3 min", "Use a maior amplitude que consiga manter com controle e boa técnica."], ["Leg Press 45°", 4, "8–10", "1–2", "2–3 min", "Controle a descida e mantenha o quadril apoiado."], ["Agachamento búlgaro com halteres", 3, "8–10 por perna", "1–2", "90–120s", "Controle principalmente a fase de descida."], ["Cadeira extensora", 3, "10–15", "1", "60–90s", "A última série pode chegar próxima da falha mantendo boa execução."], ["Cadeira flexora", 3, "10–12", "1–2", "90s", "Controle o retorno e mantenha o quadril apoiado."], ["Panturrilha em pé na máquina", 4, "8–12", "1–2", "60–90s", "Use amplitude completa e faça uma breve pausa no topo."], ["Abdominal na polia alta", 3, "10–15", "1–2", "60s", "Flexione o tronco sem transformar o exercício em movimento de quadril."]]}, "qua": {"eyebrow": "QUARTA-FEIRA", "title": "Corrida + Condicionamento", "estimate": "5 km", "run": true, "exercises": [["Corrida contínua", 1, "5 km", "RPE 4–6", "—", "Corrida controlada. Não é um teste de 5 km: termine sentindo que conseguiria continuar."]]}, "qui": {"eyebrow": "QUINTA-FEIRA", "title": "Costas + Bíceps + Ombros", "estimate": "~70 min", "exercises": [["Barra fixa pronada", 4, "6–10", "1–2", "2–3 min", "Se 10 repetições estiverem confortáveis, adicione sobrecarga."], ["Remada curvada com barra", 4, "6–8", "1–2", "2–3 min", "Mantenha o tronco firme e evite impulso."], ["Puxada alta pegada neutra", 3, "8–12", "1–2", "90–120s", "Conduza o movimento pelos cotovelos."], ["Remada baixa com triângulo", 3, "8–12", "1–2", "90–120s", "Evite transformar a remada em balanço do tronco."], ["Crucifixo inverso na máquina", 3, "12–15", "1–2", "60–90s", "Controle o movimento e mantenha os ombros estáveis."], ["Elevação lateral unilateral na polia", 3, "12–15", "1–2", "60–90s", "Movimento contínuo e sem impulso."], ["Rosca direta com barra W", 3, "8–10", "1–2", "90s", "Mantenha os cotovelos estáveis."], ["Rosca inclinada com halteres", 3, "10–12", "1–2", "60–90s", "Alongue completamente sem projetar o ombro."]]}, "sex": {"eyebrow": "SEXTA-FEIRA", "title": "Pernas B + Core", "estimate": "~70 min", "exercises": [["Terra romeno / Stiff com barra", 4, "6–8", "1–2", "2–3 min", "Leve o quadril para trás, mantenha a coluna estável e controle a descida."], ["Elevação pélvica", 4, "8–10", "1–2", "2 min", "Complete a extensão do quadril sem hiperestender a lombar."], ["Mesa flexora", 3, "8–12", "1", "90s", "Controle principalmente a fase de retorno."], ["Hack Squat — amplitude total", 4, "8–10", "1–2", "2–3 min", "Use a maior amplitude que consiga controlar mantendo quadril e coluna estáveis."], ["Passada reversa com halteres", 3, "8–10 por perna", "1–2", "90–120s", "Faça o passo para trás de forma controlada e mantenha estabilidade."], ["Panturrilha sentada", 4, "10–15", "1–2", "60–90s", "Use amplitude completa e controle em toda a repetição."], ["Pallof Press na polia", 3, "10–15 por lado", "~2", "45–60s", "Estenda os braços, resista à rotação e segure 1–2 segundos."]]}};
 let running=false, secs=0, timer=null, currentDay='seg', currentWeek=1;
 
@@ -212,7 +267,7 @@ function renderWorkout(){
     html+=`<section class="card">
       <div class="top"><div><div class="name">${e[0]}</div>
       <div class="info">${p.run?e[2]:(e[1]+' séries • '+e[2]+' repetições • RIR '+rirTarget(e[0]))}</div></div>
-      <a class="execution" href="#" onclick="event.preventDefault()">VER EXECUÇÃO</a></div>
+      <button class="execution" type="button" onclick="openExecution(e[0])">VER EXECUÇÃO</button></div>
       <div class="cue">${e[5]}</div>`;
     for(let s=1;s<=e[1];s++){
       html+=`<div class="set"><button class="check" onclick="toggleSet(this)">○</button>
