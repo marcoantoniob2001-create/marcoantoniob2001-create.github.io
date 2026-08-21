@@ -32,7 +32,6 @@
       protocolName: config.protocolName,
       cycleId: config.cycleId,
       records: {},
-      sessions: {},
       updatedAt: null
     };
   }
@@ -64,33 +63,28 @@
   }
 
   function currentWeek() {
-    const button = activeButton('.weeks') || document.querySelector('.weeks button');
-    const value = button?.dataset.week || button?.textContent?.match(/\d+/)?.[0];
+    const button =
+      activeButton('.weeks') ||
+      document.querySelector('.weeks button');
 
-    if (value) return Number(value);
-    if (typeof window.currentWeek === 'number') return window.currentWeek;
-    if (typeof window.week === 'number') return window.week;
+    const value =
+      button?.dataset.week ||
+      button?.textContent?.match(/\d+/)?.[0];
 
-    return 1;
+    return Number(value || 1);
   }
 
   function currentDay() {
     const buttons = [...document.querySelectorAll('.days button')];
     const button = activeButton('.days') || buttons[0];
     const index = Math.max(0, buttons.indexOf(button));
-
-    const id =
-      button?.dataset.day ||
-      (typeof window.currentDay === 'string' ? window.currentDay : '') ||
-      String(index);
-
-    const label = (button?.textContent || id || `Dia ${index + 1}`).trim();
+    const id = button?.dataset.day || String(index);
+    const label = (button?.textContent || `Dia ${index + 1}`).trim();
 
     return {
       id: slug(id),
       label,
-      index,
-      total: buttons.length || 1
+      index
     };
   }
 
@@ -106,11 +100,15 @@
       .map(element => element.textContent)
       .join(' ');
 
-    return Number(text.match(/s[eé]rie\s*(\d+)/i)?.[1] || index + 1);
+    return Number(
+      text.match(/s[eé]rie\s*(\d+)/i)?.[1] ||
+      index + 1
+    );
   }
 
   function fieldName(input, index) {
-    const hint = `${input.name || ''} ${input.placeholder || ''}`.toLowerCase();
+    const hint =
+      `${input.name || ''} ${input.placeholder || ''}`.toLowerCase();
 
     if (/kg|carga|peso/.test(hint)) return 'load';
     if (/rep/.test(hint)) return 'reps';
@@ -123,7 +121,9 @@
   }
 
   function setContext(set) {
-    const card = set.closest('.card, .exercise-card, section');
+    const card =
+      set.closest('.card, .exercise-card, section');
+
     if (!card) return null;
 
     const cards = [
@@ -172,24 +172,27 @@
   }
 
   function readStaticRir(set) {
-    const values = [...set.querySelectorAll('span')].map(element =>
-      element.textContent.trim()
-    );
+    const text = [...set.querySelectorAll('span')]
+      .map(element => element.textContent.trim())
+      .find(value => /^RIR\s*/i.test(value));
 
-    const text = values.find(value => /^RIR\s*/i.test(value));
-
-    return text ? text.replace(/^RIR\s*/i, '').trim() : '';
+    return text
+      ? text.replace(/^RIR\s*/i, '').trim()
+      : '';
   }
 
   function saveSet(set, persist) {
     const context = setContext(set);
+
     if (!context) return;
 
     const record = ensureRecord(context);
 
-    [...set.querySelectorAll('input')].forEach((input, index) => {
-      record.fields[fieldName(input, index)] = input.value.trim();
-    });
+    [...set.querySelectorAll('input')]
+      .forEach((input, index) => {
+        record.fields[fieldName(input, index)] =
+          input.value.trim();
+      });
 
     if (!record.fields.rir) {
       record.fields.rir = readStaticRir(set);
@@ -212,59 +215,35 @@
     if (restoring) return;
 
     restoring = true;
-    let migrated = false;
 
     document.querySelectorAll('.set').forEach(set => {
       const context = setContext(set);
+
       if (!context) return;
 
-      let record = state.records[context.id];
-      const inputs = [...set.querySelectorAll('input')];
-      const check = set.querySelector('.check');
-
-      if (!record) {
-        const hasLegacy =
-          inputs.some(input => input.value) ||
-          check?.classList.contains('done');
-
-        if (hasLegacy) {
-          record = ensureRecord(context);
-
-          inputs.forEach((input, index) => {
-            record.fields[fieldName(input, index)] = input.value.trim();
-          });
-
-          record.fields.rir ||= readStaticRir(set);
-          record.done = Boolean(check?.classList.contains('done'));
-          record.updatedAt = new Date().toISOString();
-          migrated = true;
-        }
-      }
+      const record = state.records[context.id];
 
       if (!record) return;
 
-      inputs.forEach((input, index) => {
-        const saved = record.fields[fieldName(input, index)];
+      [...set.querySelectorAll('input')]
+        .forEach((input, index) => {
+          const saved =
+            record.fields[fieldName(input, index)];
 
-        if (saved !== undefined && saved !== '') {
-          input.value = saved;
-        }
-      });
+          if (saved !== undefined && saved !== '') {
+            input.value = saved;
+          }
+        });
+
+      const check = set.querySelector('.check');
 
       if (check && record.done) {
-        if (!check.classList.contains('done')) {
-          check.classList.add('done');
-        }
-
-        if (check.textContent.trim() !== '✓') {
-          check.textContent = '✓';
-        }
+        check.classList.add('done');
+        check.textContent = '✓';
       }
     });
 
     restoring = false;
-
-    if (migrated) saveState();
 
     try {
       if (typeof window.updateProgress === 'function') {
@@ -288,214 +267,61 @@
     saveState();
   }
 
-  function sessionId(week, dayId) {
-    return `${week}|${dayId}`;
-  }
-
-  function workoutDuration() {
-    return (
-      document.getElementById('totalClock')?.textContent ||
-      document.getElementById('clock')?.textContent ||
-      ''
-    ).trim();
-  }
-
-  function finishSession(mood, feedback) {
-    collectCurrentWorkout();
-
-    const week = currentWeek();
+  function feedbackMessage(mood, feedback) {
     const day = currentDay();
+    const week = currentWeek();
 
-    state.sessions[sessionId(week, day.id)] = {
-      week,
-      dayId: day.id,
-      dayLabel: day.label,
-      date: new Date().toISOString(),
-      duration: workoutDuration(),
-      mood: mood || 'Não informado',
-      feedback: feedback || 'Sem observações',
-      completed: true
-    };
-
-    saveState();
-
-    return { week, day };
-  }
-
-  function csvCell(value) {
-    const text = String(value ?? '')
-      .replace(/\r?\n/g, ' ')
-      .trim();
-
-    return `"${text.replace(/"/g, '""')}"`;
-  }
-
-  function rowsFor(scope, week, dayId) {
-    return Object.values(state.records)
-      .filter(record =>
-        scope === 'full' ||
-        (record.week === week && record.dayId === dayId)
+    const checks = [
+      ...document.querySelectorAll(
+        '#workoutContent .check, #main .check'
       )
-      .sort(
-        (a, b) =>
-          a.week - b.week ||
-          a.dayIndex - b.dayIndex ||
-          a.exerciseIndex - b.exerciseIndex ||
-          a.series - b.series
-      );
-  }
-
-  function buildCsv(scope, week, dayId) {
-    const headers = [
-      'aluno',
-      'protocolo',
-      'ciclo',
-      'semana',
-      'dia',
-      'data',
-      'exercicio',
-      'serie',
-      'carga',
-      'repeticoes',
-      'RIR',
-      'tempo',
-      'pace',
-      'intensidade',
-      'concluida',
-      'duracao_treino',
-      'percepcao',
-      'feedback',
-      'atualizado_em'
     ];
 
-    const lines = [headers.map(csvCell).join(';')];
+    const completed = checks.filter(check =>
+      check.classList.contains('done')
+    ).length;
 
-    rowsFor(scope, week, dayId).forEach(record => {
-      const session =
-        state.sessions[sessionId(record.week, record.dayId)] || {};
-
-      lines.push(
-        [
-          config.studentName,
-          config.protocolName,
-          config.cycleId,
-          record.week,
-          record.dayLabel,
-          session.date || '',
-          record.exercise,
-          record.series,
-          record.fields.load || '',
-          record.fields.reps || '',
-          record.fields.rir || '',
-          record.fields.time || '',
-          record.fields.pace || '',
-          record.fields.intensity || '',
-          record.done ? 'sim' : 'não',
-          session.duration || '',
-          session.mood || '',
-          session.feedback || '',
-          record.updatedAt || ''
-        ]
-          .map(csvCell)
-          .join(';')
-      );
-    });
-
-    return '\ufeff' + lines.join('\r\n');
-  }
-
-  function dateStamp() {
-    const date = new Date();
-
-    return `${String(date.getDate()).padStart(2, '0')}-${String(
-      date.getMonth() + 1
-    ).padStart(2, '0')}-${date.getFullYear()}`;
-  }
-
-  function makeFile(name, content) {
-    return new File([content], name, {
-      type: 'text/csv;charset=utf-8'
-    });
-  }
-
-  function downloadFile(file) {
-    const url = URL.createObjectURL(file);
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = file.name;
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
-  }
-
-  function isFinalWorkout(context) {
-    return (
-      context.week === 4 &&
-      context.day.index === context.day.total - 1
-    );
-  }
-
-  function summaryMessage(context, checkout) {
     return [
-      checkout
-        ? `Check-out final — ${config.protocolName}`
-        : `Treino concluído — ${config.protocolName}`,
-
-      `${config.studentName} | Semana ${context.week}/4 | ${context.day.label}`,
-
+      `Treino concluído - ${config.protocolName}`,
       '',
-
-      checkout
-        ? 'Os arquivos CSV de hoje e do ciclo completo foram baixados. Anexe os dois nesta conversa antes de enviar.'
-        : 'O arquivo CSV com as cargas e o feedback foi baixado. Anexe-o nesta conversa antes de enviar.'
+      `Dia: ${day.label}`,
+      `Semana: ${week}/4`,
+      `Séries concluídas: ${completed}/${checks.length}`,
+      `Percepção: ${mood || 'Não informado'}`,
+      `Feedback: ${feedback || 'Sem observações'}`
     ].join('\n');
   }
 
-  function exportWorkout(mood, feedback) {
-    const context = finishSession(mood, feedback);
-    const checkout = isFinalWorkout(context);
-    const base = slug(config.studentName).replace(/-/g, '_');
+  function sendFeedback() {
+    collectCurrentWorkout();
 
-    const dailyName =
-      `${base}_semana-${context.week}_${context.day.id}_${dateStamp()}.csv`;
+    const modal =
+      document.getElementById('mpFeedbackModal');
 
-    const files = [
-      makeFile(
-        dailyName,
-        buildCsv('daily', context.week, context.day.id)
-      )
-    ];
+    const mood =
+      modal
+        ?.querySelector('[data-mood].on')
+        ?.dataset.mood || '';
 
-    if (checkout) {
-      files.push(
-        makeFile(
-          `checkout_${base}_${config.cycleId}.csv`,
-          buildCsv('full', context.week, context.day.id)
-        )
-      );
-    }
+    const feedback =
+      modal
+        ?.querySelector('#mpFeedbackText')
+        ?.value
+        .trim() || '';
 
-    const message = summaryMessage(context, checkout);
-
-    files.forEach(downloadFile);
+    const message =
+      feedbackMessage(mood, feedback);
 
     const whatsapp =
       `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(message)}`;
 
-    showToast('CSV baixado. Abrindo o WhatsApp do Marco...');
-
-    closeExportModal();
-    closeLegacyFeedback();
-
-    window.location.assign(whatsapp);
+    window.open(whatsapp, '_blank');
   }
 
   function addStyles() {
-    if (document.getElementById('mp-storage-style')) return;
+    if (document.getElementById('mp-storage-style')) {
+      return;
+    }
 
     const style = document.createElement('style');
     style.id = 'mp-storage-style';
@@ -550,7 +376,7 @@
         background: #9f2d2d;
       }
 
-      #mpExportModal {
+      #mpFeedbackModal {
         position: fixed;
         inset: 0;
         z-index: 10000;
@@ -561,11 +387,11 @@
         padding: 12px;
       }
 
-      #mpExportModal.on {
+      #mpFeedbackModal.on {
         display: flex;
       }
 
-      .mpExportSheet {
+      .mpFeedbackSheet {
         width: min(620px, 100%);
         background: #fff;
         color: #172033;
@@ -575,13 +401,13 @@
         font-family: Arial, sans-serif;
       }
 
-      .mpExportSheet h3 {
+      .mpFeedbackSheet h3 {
         margin: 0;
         color: #192F5A;
         font-size: 20px;
       }
 
-      .mpExportSheet p {
+      .mpFeedbackSheet p {
         font-size: 12px;
         color: #667085;
         line-height: 1.45;
@@ -615,7 +441,7 @@
         border-color: #192F5A;
       }
 
-      #mpFeedback {
+      #mpFeedbackText {
         width: 100%;
         min-height: 80px;
         resize: vertical;
@@ -625,27 +451,27 @@
         font: 12px Arial;
       }
 
-      .mpExportActions {
+      .mpFeedbackActions {
         display: grid;
         grid-template-columns: 1fr auto;
         gap: 8px;
         margin-top: 10px;
       }
 
-      .mpExportSend,
-      .mpExportCancel {
+      .mpFeedbackSend,
+      .mpFeedbackClose {
         border: 0;
         border-radius: 11px;
         padding: 12px;
         font-weight: 900;
       }
 
-      .mpExportSend {
+      .mpFeedbackSend {
         background: #F25353;
         color: #fff;
       }
 
-      .mpExportCancel {
+      .mpFeedbackClose {
         background: #e9edf3;
         color: #344054;
       }
@@ -657,7 +483,8 @@
   let savedStatusTimer;
 
   function showSaved() {
-    let status = document.getElementById('mpSavedStatus');
+    let status =
+      document.getElementById('mpSavedStatus');
 
     if (!status) {
       status = document.createElement('div');
@@ -677,7 +504,8 @@
   let toastTimer;
 
   function showToast(message, error) {
-    let toast = document.getElementById('mpToast');
+    let toast =
+      document.getElementById('mpToast');
 
     if (!toast) {
       toast = document.createElement('div');
@@ -686,9 +514,12 @@
     }
 
     toast.textContent = message;
-    toast.classList.toggle('error', Boolean(error));
-    toast.classList.add('on');
+    toast.classList.toggle(
+      'error',
+      Boolean(error)
+    );
 
+    toast.classList.add('on');
     clearTimeout(toastTimer);
 
     toastTimer = setTimeout(() => {
@@ -696,19 +527,22 @@
     }, 2600);
   }
 
-  function createExportModal() {
-    if (document.getElementById('mpExportModal')) return;
+  function createFeedbackModal() {
+    if (
+      document.querySelector('.feedback') ||
+      document.getElementById('mpFeedbackModal')
+    ) {
+      return;
+    }
 
     const modal = document.createElement('div');
-    modal.id = 'mpExportModal';
+    modal.id = 'mpFeedbackModal';
 
     modal.innerHTML = `
-      <div class="mpExportSheet">
-        <h3 id="mpExportTitle">Treino concluído</h3>
+      <div class="mpFeedbackSheet">
+        <h3>Treino concluído</h3>
 
-        <p id="mpExportText">
-          Como você se sentiu? O arquivo com as cargas será preparado para envio ao Marco.
-        </p>
+        <p>Como você se sentiu?</p>
 
         <div class="mpMoods">
           <button type="button" data-mood="Muito bem">
@@ -738,16 +572,22 @@
         </div>
 
         <textarea
-          id="mpFeedback"
+          id="mpFeedbackText"
           placeholder="Feedback, dor, dificuldade, carga leve ou pesada..."
         ></textarea>
 
-        <div class="mpExportActions">
-          <button class="mpExportSend" type="button">
-            BAIXAR CSV E ABRIR WHATSAPP
+        <div class="mpFeedbackActions">
+          <button
+            class="mpFeedbackSend"
+            type="button"
+          >
+            ENVIAR PARA MARCO NO WHATSAPP
           </button>
 
-          <button class="mpExportCancel" type="button">
+          <button
+            class="mpFeedbackClose"
+            type="button"
+          >
             FECHAR
           </button>
         </div>
@@ -762,184 +602,146 @@
         button.addEventListener('click', () => {
           modal
             .querySelectorAll('[data-mood]')
-            .forEach(item => item.classList.remove('on'));
+            .forEach(item =>
+              item.classList.remove('on')
+            );
 
           button.classList.add('on');
         });
       });
 
     modal
-      .querySelector('.mpExportCancel')
-      .addEventListener('click', closeExportModal);
+      .querySelector('.mpFeedbackSend')
+      .addEventListener(
+        'click',
+        sendFeedback
+      );
 
     modal
-      .querySelector('.mpExportSend')
-      .addEventListener('click', () => {
-        const mood =
-          modal.querySelector('[data-mood].on')?.dataset.mood || '';
-
-        const feedback =
-          modal.querySelector('#mpFeedback').value.trim();
-
-        exportWorkout(mood, feedback);
-      });
+      .querySelector('.mpFeedbackClose')
+      .addEventListener(
+        'click',
+        closeFeedbackModal
+      );
   }
 
-  function openExportModal() {
-    createExportModal();
+  function openFeedbackModal() {
+    collectCurrentWorkout();
+    createFeedbackModal();
 
-    const modal = document.getElementById('mpExportModal');
-
-    const context = {
-      week: currentWeek(),
-      day: currentDay()
-    };
-
-    const checkout = isFinalWorkout(context);
-
-    modal.querySelector('#mpExportTitle').textContent =
-      checkout
-        ? 'Check-out final do ciclo'
-        : 'Treino concluído';
-
-    modal.querySelector('#mpExportText').textContent =
-      checkout
-        ? 'Último treino da Semana 4. Serão gerados o arquivo de hoje e o check-out completo das quatro semanas.'
-        : 'Como você se sentiu? O mini arquivo com as cargas de hoje será preparado para envio ao Marco.';
-
-    modal.querySelector('.mpExportSend').textContent =
-      checkout
-        ? 'BAIXAR CHECK-OUT E ABRIR WHATSAPP'
-        : 'BAIXAR CSV E ABRIR WHATSAPP';
-
-    modal.classList.add('on');
-  }
-
-  function closeExportModal() {
     document
-      .getElementById('mpExportModal')
-      ?.classList.remove('on');
+      .getElementById('mpFeedbackModal')
+      ?.classList.add('on');
   }
 
-  function closeLegacyFeedback() {
+  function closeFeedbackModal() {
     document
-      .querySelector('.feedback.on')
+      .getElementById('mpFeedbackModal')
       ?.classList.remove('on');
-  }
-
-  function legacyMoodAndFeedback() {
-    const selected =
-      document.querySelector('.feedback .moods button.on');
-
-    const mood =
-      selected?.querySelector('small')?.textContent ||
-      selected?.textContent?.trim() ||
-      '';
-
-    const feedback =
-      document
-        .querySelector('.feedback textarea, #note')
-        ?.value
-        ?.trim() || '';
-
-    return { mood, feedback };
   }
 
   function integrateFinishFlow() {
+    if (document.querySelector('.feedback')) {
+      return;
+    }
+
     if (typeof window.finishWorkout === 'function') {
-      const originalFinish = window.finishWorkout;
+      const originalFinish =
+        window.finishWorkout;
 
       window.finishWorkout = function () {
-        const result = originalFinish.apply(this, arguments);
-        openExportModal();
+        const result =
+          originalFinish.apply(this, arguments);
+
+        openFeedbackModal();
+
         return result;
       };
 
       finishWrapped = true;
     }
 
-    if (
-      typeof window.send === 'function' &&
-      document.querySelector('.feedback')
-    ) {
-      window.send = function () {
-        const values = legacyMoodAndFeedback();
-        exportWorkout(values.mood, values.feedback);
-      };
-
-      const sendButton =
-        document.querySelector('.feedback .send');
-
-      if (sendButton) {
-        sendButton.textContent =
-          'Baixar CSV e abrir WhatsApp do Marco';
-      }
-    }
-
     document.addEventListener('click', event => {
       const button =
-        event.target.closest('button.finish, .finish button');
+        event.target.closest(
+          'button.finish, .finish button'
+        );
 
-      if (
-        !button ||
-        finishWrapped ||
-        document.querySelector('.feedback')
-      ) {
-        return;
-      }
+      if (!button || finishWrapped) return;
 
-      setTimeout(openExportModal, 0);
+      setTimeout(openFeedbackModal, 0);
     });
   }
 
   function init() {
     addStyles();
-    createExportModal();
+    createFeedbackModal();
     restoreInputs();
     integrateFinishFlow();
 
     document.addEventListener('input', event => {
-      const input = event.target.closest('.set input');
+      const input =
+        event.target.closest('.set input');
 
       if (!input || restoring) return;
 
-      saveSet(input.closest('.set'), true);
+      saveSet(
+        input.closest('.set'),
+        true
+      );
     });
 
     document.addEventListener('change', event => {
-      const input = event.target.closest('.set input');
+      const input =
+        event.target.closest('.set input');
 
       if (!input || restoring) return;
 
-      saveSet(input.closest('.set'), true);
+      saveSet(
+        input.closest('.set'),
+        true
+      );
     });
 
     document.addEventListener('click', event => {
-      const check = event.target.closest('.set .check');
+      const check =
+        event.target.closest('.set .check');
 
       if (!check) return;
 
       setTimeout(() => {
-        saveSet(check.closest('.set'), true);
+        saveSet(
+          check.closest('.set'),
+          true
+        );
       }, 0);
     });
 
-    const observer = new MutationObserver(mutations => {
-      const relevant = mutations.some(mutation =>
-        [...mutation.addedNodes].some(node => {
-          if (node.nodeType !== 1) return false;
+    const observer =
+      new MutationObserver(mutations => {
+        const relevant =
+          mutations.some(mutation =>
+            [...mutation.addedNodes]
+              .some(node => {
+                if (node.nodeType !== 1) {
+                  return false;
+                }
 
-          return (
-            node.matches?.(
-              '.set, .card, #workoutContent, #main'
-            ) ||
-            Boolean(node.querySelector?.('.set'))
+                return (
+                  node.matches?.(
+                    '.set, .card, #workoutContent, #main'
+                  ) ||
+                  Boolean(
+                    node.querySelector?.('.set')
+                  )
+                );
+              })
           );
-        })
-      );
 
-      if (relevant) scheduleRestore();
-    });
+        if (relevant) {
+          scheduleRestore();
+        }
+      });
 
     observer.observe(document.body, {
       childList: true,
@@ -948,7 +750,10 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener(
+      'DOMContentLoaded',
+      init
+    );
   } else {
     init();
   }
