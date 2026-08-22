@@ -367,4 +367,51 @@ function renderWorkout(){
     </div>`;
   }
 
-  let html=`<div class="title"><div class="eyebrow">${p.eyebrow}</div><h2
+  let html=`<div class="title"><div class="eyebrow">${p.eyebrow}</div><h2>${p.title}</h2></div>${quickInfo}`;
+
+  if(!p.run){
+    html+=`<div class="rir">${weeklyNote()}<br><br><b>RIR</b> = quantas repetições ainda sobrariam com boa execução.</div>`;
+  }else{
+    const runNote=currentDay==='qua'
+      ? (currentWeek===1?'<b>Semana 1 — Base:</b> primeiro contato com os intervalos. Ritmo forte, mas sempre controlado.':currentWeek===2?'<b>Semana 2 — Progressão:</b> aumentamos uma repetição e encurtamos a recuperação.':currentWeek===3?'<b>Semana 3 — Pico:</b> intervalos mais longos. Sustente o ritmo sem transformar em sprint.':'<b>Semana 4 — Deload:</b> apenas corrida leve contínua para reduzir a fadiga.')
+      : (currentWeek===1?'<b>Semana 1 — Base:</b> rodagem leve de 5 km.':'<b>Semana 2 — Progressão:</b> aumentamos a rodagem para 6 km mantendo intensidade leve.'.replace('intensidade','intensidade'));
+
+    const saturdayNote=currentWeek===1?'<b>Semana 1 — Base:</b> 5 km leves, sem preocupação com pace.':currentWeek===2?'<b>Semana 2 — Progressão:</b> 6 km leves. Aumente a distância, não a velocidade.':currentWeek===3?'<b>Semana 3 — Pico:</b> 6–7 km leves, a maior rodagem deste ciclo.':'<b>Semana 4 — Deload:</b> 4–5 km bem leves ou descanso se houver fadiga.';
+
+    html+=`<div class="rir">${currentDay==='sab'?saturdayNote:runNote}<br><br><b>RPE</b> = percepção de esforço de 0 a 10. Estas corridas são complementares e não precisam virar teste de desempenho.</div>`;
+  }
+
+  p.exercises.forEach((e,idx)=>{
+    html+=`<section class="card">
+      <div class="top"><div><div class="name">${e[0]}</div>
+      <div class="info">${p.run?e[2]:(e[1]+' séries • '+e[2]+' repetições • RIR '+rirTarget(e[0]))}</div></div>
+      ${p.run?'':`<a class="video" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e[0]+' exercício execução')}">Vídeo</a>`}</div>
+      <div class="cue">${e[5]}</div>`;
+
+    for(let s=1;s<=e[1];s++){
+      html+=`<div class="set"><button class="check" onclick="toggleSet(this)">○</button>
+      <span>${p.run?(e[1]>1?'Bloco '+s:'Corrida'):'Série '+s}</span>
+      <input placeholder="${p.run?'tempo':'kg'}">
+      <input placeholder="${p.run?'pace':'reps'}">
+      <span>${p.run?e[3]:'RIR '+rirTarget(e[0])}</span></div>`;
+    }
+
+    const restSeconds=parseInt(e[4],10)||0;
+    if(!p.run && restSeconds>0){
+      html+=`<div class="rest"><span>Descanso</span><b>${e[4]}</b><button type="button" onclick="startRest(this,${restSeconds})">INICIAR</button></div>`;
+    }
+    html+=`</section>`;
+  });
+
+  document.getElementById('workoutContent').innerHTML=html;
+  updateProgress();
+}
+
+renderWorkout();
+</script>
+<script>
+window.MP_TRAINING_CONFIG={studentId:'michel-melo-mendes',studentName:'Michel Melo Mendes',protocolName:'Protocolo Michel',cycleId:'2026-08-ciclo-1',whatsapp:'5533999291921'};
+</script>
+<script src="/assets/training-storage.js?v=20260821-3"></script>
+</body>
+</html>
