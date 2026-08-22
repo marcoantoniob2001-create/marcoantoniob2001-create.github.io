@@ -179,24 +179,24 @@ const plans = {
       ["Abdominal no solo",3,"12–20","","40s","Aproxime as costelas da pelve com controle, sem puxar o pescoço e sem usar impulso."]
     ]
   },
-  "qua": {"run":true,"eyebrow":"QUARTA-FEIRA","title":"Corrida — Qualidade","estimate":"Variável","weeks":{
-    "1":{"estimate":"~25 min","exercises":[
-      ["Aquecimento leve",1,"5 min","RPE 3–4/10","0s","Comece confortável, permitindo que a respiração e a passada entrem no ritmo."],
-      ["Intervalos controlados",5,"1 min moderado/forte + 1min30 leve","RPE 6–7/10","0s","Faça o minuto forte de forma controlada, sem sprint. Use o trecho leve para recuperar antes da próxima repetição."],
-      ["Desaquecimento leve",1,"5 min","RPE 2–3/10","0s","Reduza gradualmente o ritmo e finalize com sensação confortável."]
+  "qua": {"run":true,"eyebrow":"QUARTA-FEIRA","title":"Corrida intervalada — Qualidade","estimate":"Variável","weeks":{
+    "1":{"estimate":"~22–25 min","sessionRpe":"6–7/10","exercises":[
+      ["1. Aquecimento",1,"5 min de corrida leve","RPE 3–4/10","0s","Comece em ritmo fácil. O objetivo é apenas preparar o corpo para o bloco principal."],
+      ["2. Bloco principal",5,"5x: 1 min forte + 1min30 leve","RPE 6–7/10","0s","Repita 5 vezes: corra 1 minuto em ritmo forte controlado e depois 1 minuto e 30 segundos bem leve para recuperar. Forte não significa sprint."],
+      ["3. Volta à calma",1,"5 min de corrida leve","RPE 2–3/10","0s","Diminua o ritmo e termine confortável, deixando a respiração voltar ao normal."]
     ]},
-    "2":{"estimate":"~25 min","exercises":[
-      ["Aquecimento leve",1,"5 min","RPE 3–4/10","0s","Comece confortável e aumente o ritmo de forma progressiva."],
-      ["Intervalos controlados",6,"1 min moderado/forte + 1 min leve","RPE 6–7/10","0s","Mantenha o trecho forte consistente entre as repetições. Evite transformar o bloco em sprint máximo."],
-      ["Desaquecimento leve",1,"5 min","RPE 2–3/10","0s","Finalize reduzindo o ritmo gradualmente."]
+    "2":{"estimate":"~22–25 min","sessionRpe":"6–7/10","exercises":[
+      ["1. Aquecimento",1,"5 min de corrida leve","RPE 3–4/10","0s","Comece leve e aumente o ritmo aos poucos, sem cansar antes do bloco principal."],
+      ["2. Bloco principal",6,"6x: 1 min forte + 1 min leve","RPE 6–7/10","0s","Repita 6 vezes: 1 minuto forte controlado seguido de 1 minuto leve. Tente manter os minutos fortes em ritmo parecido do início ao fim."],
+      ["3. Volta à calma",1,"5 min de corrida leve","RPE 2–3/10","0s","Finalize em ritmo confortável e reduza progressivamente a velocidade."]
     ]},
-    "3":{"estimate":"~25–30 min","exercises":[
-      ["Aquecimento leve",1,"5 min","RPE 3–4/10","0s","Prepare a corrida de forma progressiva, sem começar rápido."],
-      ["Intervalos — Pico",5,"2 min forte controlado + 1 min leve","RPE 7/10","0s","Sustente um ritmo forte que ainda permita completar todas as repetições com padrão semelhante."],
-      ["Desaquecimento leve",1,"5 min","RPE 2–3/10","0s","Reduza o ritmo e termine a sessão confortável."]
+    "3":{"estimate":"~25 min","sessionRpe":"7/10","exercises":[
+      ["1. Aquecimento",1,"5 min de corrida leve","RPE 3–4/10","0s","Corra leve e prepare-se para o bloco mais exigente deste ciclo."],
+      ["2. Bloco principal",5,"5x: 2 min forte + 1 min leve","RPE 7/10","0s","Repita 5 vezes: 2 minutos em ritmo forte controlado e 1 minuto leve. O objetivo é sustentar o ritmo, não correr no máximo."],
+      ["3. Volta à calma",1,"5 min de corrida leve","RPE 2–3/10","0s","Reduza o ritmo e termine a sessão com sensação de controle."]
     ]},
-    "4":{"estimate":"20 min","exercises":[
-      ["Corrida leve — Deload",1,"20 min contínuos","RPE 3–4/10","0s","Corra leve e solto. A proposta é reduzir fadiga, não buscar ritmo ou distância."]
+    "4":{"estimate":"20 min","sessionRpe":"3–4/10","exercises":[
+      ["Corrida leve — Deload",1,"20 min contínuos e leves","RPE 3–4/10","0s","Faça 20 minutos em ritmo confortável, sem tiros e sem meta de pace. Esta semana é para recuperar."]
     ]}
   }},
   "qui": {
@@ -224,14 +224,51 @@ const plans = {
       ["Abdominal na máquina",3,"10–15","","40s","Flexione o tronco aproximando as costelas da pelve e controle a volta da carga."]
     ]
   },
-  "sab": {"run":true,"eyebrow":"SÁBADO","title":"Corrida — Contínua","estimate":"Variável","weeks":{
-    "1":{"estimate":"5 km","exercises":[["Corrida contínua leve",1,"5 km","RPE 4–5/10","0s","Mantenha um ritmo confortável, no qual ainda seja possível conversar em frases curtas."]]},
-    "2":{"estimate":"6 km","exercises":[["Corrida contínua leve",1,"6 km","RPE 4–5/10","0s","Aumente a distância sem aumentar a intensidade. Priorize constância e conforto."]]},
-    "3":{"estimate":"6–7 km","exercises":[["Corrida contínua — Pico",1,"6–7 km","RPE 4–5/10","0s","Faça a maior distância do bloco em ritmo leve e sustentável, sem buscar recorde de pace."]]},
-    "4":{"estimate":"4–5 km","exercises":[["Corrida leve — Deload",1,"4–5 km ou descanso","RPE 3–4/10","0s","Se estiver recuperado, faça uma corrida bem leve. Se houver fadiga acumulada, o descanso é uma opção válida."]]}
+  "sab": {"run":true,"eyebrow":"SÁBADO","title":"Corrida contínua — Rodagem leve","estimate":"Variável","weeks":{
+    "1":{"estimate":"5 km","sessionRpe":"4–5/10","exercises":[["Rodagem leve",1,"5 km contínuos","RPE 4–5/10","0s","Corra os 5 km em ritmo confortável. Você deve conseguir falar frases curtas durante boa parte da corrida. Não busque recorde de pace."]]},
+    "2":{"estimate":"6 km","sessionRpe":"4–5/10","exercises":[["Rodagem leve",1,"6 km contínuos","RPE 4–5/10","0s","Aumente para 6 km, mas mantenha o mesmo esforço confortável da semana anterior. A progressão aqui é pela distância, não pela velocidade."]]},
+    "3":{"estimate":"6–7 km","sessionRpe":"4–5/10","exercises":[["Rodagem longa do ciclo",1,"6 a 7 km contínuos","RPE 4–5/10","0s","Faça a maior rodagem do ciclo em ritmo leve e sustentável. Se 7 km fizer a técnica ou o conforto piorarem, encerre em 6 km."]]},
+    "4":{"estimate":"4–5 km ou descanso","sessionRpe":"3–4/10","exercises":[["Rodagem leve — Deload",1,"4 a 5 km leves ou descanso","RPE 3–4/10","0s","Se estiver bem recuperado, faça 4 a 5 km bem leves. Se sentir fadiga acumulada, descanse. Não há meta de pace nesta semana."]]}
   }}
 };
 let running=false, secs=0, timer=null, currentDay='seg', currentWeek=1;
+let activeRestTimer=null, activeRestButton=null;
+
+function startRest(btn, seconds){
+  if(activeRestTimer){
+    clearInterval(activeRestTimer);
+    if(activeRestButton && activeRestButton!==btn){
+      activeRestButton.textContent='INICIAR';
+      activeRestButton.disabled=false;
+    }
+  }
+
+  let remaining=Number(seconds)||0;
+  if(remaining<=0) return;
+
+  activeRestButton=btn;
+  btn.disabled=false;
+  btn.textContent=remaining+'s';
+
+  activeRestTimer=setInterval(()=>{
+    remaining--;
+    if(remaining>0){
+      btn.textContent=remaining+'s';
+      return;
+    }
+
+    clearInterval(activeRestTimer);
+    activeRestTimer=null;
+    btn.textContent='PRONTO';
+    if(navigator.vibrate) navigator.vibrate([180,100,180]);
+
+    setTimeout(()=>{
+      if(btn && btn.isConnected) btn.textContent='INICIAR';
+      if(activeRestButton===btn) activeRestButton=null;
+    },1500);
+  },1000);
+}
+
 
 function draw(){
   const m=String(Math.floor(secs/60)).padStart(2,'0');
@@ -313,39 +350,21 @@ function renderWorkout(){
   const base=plans[currentDay];
   const p=base.run ? {...base, ...base.weeks[String(currentWeek)]} : base;
   const totalSeries=p.exercises.reduce((a,e)=>a+e[1],0);
-  let html=`<div class="title"><div class="eyebrow">${p.eyebrow}</div><h2>${p.title}</h2></div>
-  <div class="quickinfo">
-    <div><b>${p.exercises.length}</b><span>EXERCÍCIOS</span></div>
-    <div><b>${totalSeries}</b><span>${p.run?'BLOCO':'SÉRIES'}</span></div>
-    <div><b>${p.estimate}</b><span>${p.run?'DISTÂNCIA':'ESTIMATIVA'}</span></div>
-  </div>`;
 
-  if(!p.run) html+=`<div class="rir">${weeklyNote()}<br><br><b>RIR</b> = quantas repetições ainda sobrariam com boa execução.</div>`;
-  else html+=`<div class="rir">${currentWeek===1?'<b>Semana 1 — Base:</b> construa ritmo e adaptação.':currentWeek===2?'<b>Semana 2 — Progressão:</b> aumente o estímulo mantendo controle.':currentWeek===3?'<b>Semana 3 — Pico:</b> maior estímulo do bloco, sem sprint máximo.':'<b>Semana 4 — Deload:</b> reduza distância e intensidade para favorecer recuperação.'}<br><br><b>RPE</b> = percepção de esforço de 0 a 10.</div>`;
+  let quickInfo;
+  if(p.run){
+    const blocks=p.exercises.length;
+    quickInfo=`<div class="quickinfo">
+      <div><b>${blocks}</b><span>${blocks===1?'ETAPA':'ETAPAS'}</span></div>
+      <div><b>${p.estimate}</b><span>${currentDay==='sab'?'DISTÂNCIA':'DURAÇÃO'}</span></div>
+      <div><b>${p.sessionRpe || 'Leve'}</b><span>ESFORÇO</span></div>
+    </div>`;
+  }else{
+    quickInfo=`<div class="quickinfo">
+      <div><b>${p.exercises.length}</b><span>EXERCÍCIOS</span></div>
+      <div><b>${totalSeries}</b><span>SÉRIES</span></div>
+      <div><b>${p.estimate}</b><span>ESTIMATIVA</span></div>
+    </div>`;
+  }
 
-  p.exercises.forEach((e,idx)=>{
-    html+=`<section class="card">
-      <div class="top"><div><div class="name">${e[0]}</div>
-      <div class="info">${p.run?e[2]:(e[1]+' séries • '+e[2]+' repetições • RIR '+rirTarget(e[0]))}</div></div>
-      <a class="video" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e[0]+' exercício execução')}">Vídeo</a></div>
-      <div class="cue">${e[5]}</div>`;
-    for(let s=1;s<=e[1];s++){
-      html+=`<div class="set"><button class="check" onclick="toggleSet(this)">○</button>
-      <span>${p.run?'Corrida':'Série '+s}</span>
-      <input placeholder="${p.run?'tempo':'kg'}">
-      <input placeholder="${p.run?'pace':'reps'}">
-      <span>${p.run?e[3]:'RIR '+rirTarget(e[0])}</span></div>`;
-    }
-    html+=`<div class="rest"><span>Descanso</span><b>${e[4]}</b><button onclick="event.preventDefault()">INICIAR</button></div></section>`;
-  });
-  document.getElementById('workoutContent').innerHTML=html;
-  updateProgress();
-}
-renderWorkout();
-</script>
-<script>
-window.MP_TRAINING_CONFIG={studentId:'michel-melo-mendes',studentName:'Michel Melo Mendes',protocolName:'Protocolo Michel',cycleId:'2026-08-ciclo-1',whatsapp:'5533999291921'};
-</script>
-<script src="/assets/training-storage.js?v=20260821-3"></script>
-</body>
-</html>
+  let html=`<div class="title"><div class="eyebrow">${p.eyebrow}</div><h2
